@@ -1,41 +1,29 @@
-// Inclue the React library
-var React = require("react");
-
-// Include the react-router module
-var router = require("react-router");
-
-// Include the Route component
-var Route = router.Route;
-
-//  Include the IndexRoute (catch-all route)
-var IndexRoute = router.IndexRoute;
-
-// Include the Router component
-var Router = router.Router;
-
-// Include the browserHistory prop to configure client side routing
-var browserHistory = router.browserHistory;
+// Include the React library
+import React from "react";
+import { Route, IndexRoute, Router, browserHistory } from "react-router";
 
 // Reference the high-level components
-var Main = require("../Components/Main");
-var Search = require("../Components/Children/Search");
-var Saved = require("../Components/Children/Saved");
-var Results = require("../Components/Children/Results");
+import Main from "../Components/Main";
+import Search from "../Components/Children/Search";
+import Saved from "../Components/Children/Saved";
+import Results from "../Components/Children/Results";
 
 
 // Export the Routes
 module.exports = (
-  // High level component is the Router component.
-  <Router history={browserHistory}>
-    <Route path="/" component={Main}>
 
-      {/* If user selects Search or Saved show the appropriate component */}
-      <Route path="Search" component={Search} />
-      <Route path="Saved" component={Saved} />
+    // The high level component is the Router component
+    <Router history={browserHistory}>
+      <Route path="/" component={Main}>
 
-      {/* If user selects any other path... we get the Home Route */}
-      <IndexRoute component={Search} />
+        {/* If user selects Search or Saved show the appropriate component */}
+        <Route path="Search" component={Search} />
+        <Route path="Saved" component={Saved} />
+        <Route path="Results" component={Results} />
 
-    </Route>
-  </Router>
+        {/* If user selects any other path... we get the Home Route */}
+        <IndexRoute component={Search} />
+      </Route>
+
+    </Router>
 );
