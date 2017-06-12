@@ -1,6 +1,6 @@
 // Include the React library
 import React from "react";
-import { Route, IndexRoute, Router, browserHistory } from "react-router";
+import { HashRouter, Route, Link, IndexRoute } from 'react-router-dom';
 
 // Reference the high-level components
 import Main from "../Components/Main";
@@ -8,22 +8,22 @@ import Search from "../Components/Children/Search";
 import Saved from "../Components/Children/Saved";
 import Results from "../Components/Children/Results";
 
-
 // Export the Routes
-module.exports = (
+const routes = (
 
     // The high level component is the Router component
-    <Router history={browserHistory}>
+    <HashRouter>
       <Route path="/" component={Main}>
 
         {/* If user selects Search or Saved show the appropriate component */}
-        <Route path="Search" component={Search} />
-        <Route path="Saved" component={Saved} />
-        <Route path="Results" component={Results} />
+        <Route path="/search" component={Search} />
+        <Route path="/saved" component={Saved} />
+        <Route path="/results" component={Results} />
 
         {/* If user selects any other path... we get the Home Route */}
-        <IndexRoute component={Search} />
+        <IndexRoute component={Main} />
       </Route>
-
-    </Router>
+    </HashRouter>
 );
+
+export default routes;

@@ -6,6 +6,9 @@ import Saved from "./Children/Saved";
 import Results from "./Children/Results";
 
 class Main extends React.Component {
+  constructor(props) {
+  super(props);
+  } 
 
   // Here we render the component
   render() {
@@ -39,9 +42,6 @@ class Main extends React.Component {
                 </form>
               </div>
             </div>
-            <Search/>
-            <Results/>
-            <Saved/>
           </div>
         </div>
     );

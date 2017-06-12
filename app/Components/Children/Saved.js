@@ -1,31 +1,36 @@
-var React = require("react");
-var Helpers = require("../../utils/helpers");
+// Include React
+import React from "react";
+import Helpers from "../../utils/helpers";
 
-var Saved = React.createClass({
-    getInitialState: function () {
+class Saved extends React.Component {
+  constructor(props) {
+  super(props);
+}
+
+    getInitialState () {
         return {
             savedResults: this.props.saved
         };
-    },
-    componentDidMount: function () {
+    }
+    componentDidMount () {
         this.props.articleRetrieve();
-    },
-    deleteArticle: function (article) {
-        var promoise = new Promise((resolve, reject) => {
+    }
+    deleteArticle(article) {
+        var promise = new Promise((resolve, reject) => {
             resolve(Helpers.deleteDbArticles(article));
         }).then((res) => {
             this.props.articleRetrieve();
         });
-    },
-    handleOnclick: function (event) {
+    }
+    handleOnclick(event) {
         var i = event.target.value;
         var article = {
             id: this.props.saved[i].articleID
         };
         this.deleteArticle(article);
-    },
+    }
 
-    render: function () {
+    render() {
         return (
             <div className="row">
                 <div className="col-md-12">
@@ -46,6 +51,6 @@ var Saved = React.createClass({
 
         );
     }
-});
+};
 
-module.exports = Saved;
+export default Saved;

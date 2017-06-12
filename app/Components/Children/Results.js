@@ -1,14 +1,18 @@
-var React = require("react");
-var Helpers = require("../../utils/helpers");
+// Include React
+import React from "react";
+import Helpers from "../../utils/helpers";
 
-var Results = React.createClass({
+class Results extends React.Component {
+  constructor(props) {
+  super(props);
+}
 
-    getInitialState: function(){
+    getInitialState(){
         return {
             results: this.props.results
         };
-    },
-    handleOnClick: function(event){
+    }
+    handleOnClick(event){
         console.log(event.target.value);
         var i = event.target.value;
 
@@ -22,8 +26,8 @@ var Results = React.createClass({
         console.log(article);
         this.props.articleSave(article);
 
-    },
-    render: function(){
+    }
+    render(){
         return(
             <div className="container">
                 <div className="row">
@@ -45,6 +49,6 @@ var Results = React.createClass({
             </div>
         );
     }
-});
+};
 
-module.exports= Results;
+export default Results;

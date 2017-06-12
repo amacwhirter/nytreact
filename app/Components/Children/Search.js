@@ -1,21 +1,26 @@
-var React = require("react");
+// Include React
+import React from "react";
+import Helpers from "../../utils/helpers";
 
-var Search = React.createClass({
+class Search extends React.Component {
+  constructor(props) {
+  super(props);
+}
 
-    getInitialState: function () {
+    getInitialState() {
         return {
             topic: '',
             startYear: '',
             endYear: ''
-        }
-    },
-    handleChange: function (key) {
+        };
+    }
+    handleChange(key) {
         return function (e) {
             var state = {};
             state[key] = e.target.value;
             this.setState(state);
         }.bind(this);
-    },
+    }
     handleSubmit(event) {
         event.preventDefault();
         this.props.articleSearch(this.state.topic, this.state.startYear, this.state.endYear);
@@ -26,9 +31,8 @@ var Search = React.createClass({
                 endYear: ''
             }
         );
-    },
-
-    render: function () {
+    }
+    render(){
         return (
             <div className="container" id="search-box">
                 <div className="row">
@@ -46,6 +50,6 @@ var Search = React.createClass({
             </div>
         )
     }
-});
+  };
 
-module.exports = Search;
+export default Search;

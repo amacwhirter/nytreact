@@ -2,9 +2,10 @@
   "name": "nytreact",
   "version": "1.0.0",
   "description": "GT week 19 hwmk MERN",
-  "main": "public/index.html",
+  "main": "main.js",
   "dependencies": {
     "axios": "^0.16.2",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^4.10.5",
@@ -12,6 +13,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "request": "^2.81.0"
   },
   "devDependencies": {
