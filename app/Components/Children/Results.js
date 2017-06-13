@@ -3,52 +3,42 @@ import React from "react";
 import Helpers from "../../utils/helpers";
 
 class Results extends React.Component {
-  constructor(props) {
-  super(props);
-}
 
-    getInitialState(){
-        return {
-            results: this.props.results
-        };
-    }
-    handleOnClick(event){
-        console.log(event.target.value);
-        var i = event.target.value;
+  saveArticle(url, main){
+		this.props.setArticle(url, main);
+	}
 
-        var article = {
-            id: this.props.results[i].articleID,
-            title: this.props.results[i].title,
-            url: this.props.results[i].url,
-            data: this.props.results[i].date
-        };
+	// Here we render the component
+	render(){
+		var that = this;
 
-        console.log(article);
-        this.props.articleSave(article);
+		return(
 
-    }
-    render(){
-        return(
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-12">
-                        {this.props.results.map((res,index)=> {
-                            return(
-                                <div key={index} className="row">
-                                    <div className="col-md-12">
-                                        <h3><a target="_blank" href={res.url}>{res.title}</a></h3>
-                                        <h4>{res.date}</h4>
-                                        <button onClick={this.handleOnClick} className="btn" value={index}>Save</button>
-                                        <hr />
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
-        );
-    }
+			<div className="container">
+
+					<div className="row">
+
+						<div className="col-lg-12">
+
+							<div className="panel panel-default">
+								<div className="panel-heading">
+									<h3 className="panel-title">Results</h3>
+								</div>
+								<div className="panel-body">
+									{this.props.results.map(function(search, i)
+										{
+											console.log(search.web_url);
+											return <div><span>{i + 1}. </span><a key={i} href={search.web_url}>{search.headline.main}</a> <button className="btn btn-primary" article_url={search.web_url} article_title={search.headline.main} onClick={that.saveArticle.bind(null, search.web_url, search.headline.main)}>Save</button><br /><br /></div>
+										})}
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+		)
+	}
 };
 
 export default Results;

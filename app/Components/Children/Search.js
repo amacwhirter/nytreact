@@ -1,55 +1,109 @@
 // Include React
 import React from "react";
+import Results from "./Results"
 import Helpers from "../../utils/helpers";
 
 class Search extends React.Component {
-  constructor(props) {
-  super(props);
-}
 
+    // Here we set a generic state associated with the text being searched for
     getInitialState() {
         return {
-            topic: '',
-            startYear: '',
-            endYear: ''
+          searchQuery: "",
+          term: "",
+          begin: "",
+          end: "",
+          results: []
         };
     }
-    handleChange(key) {
-        return function (e) {
-            var state = {};
-            state[key] = e.target.value;
-            this.setState(state);
-        }.bind(this);
+
+    componentDidUpdate(prevProps, prevState) {
+        // If we have a new search term, run a new search
+        if (prevState.searchQuery !== this.state.searchQuery) {
+            console.log("UPDATED");
+
+            helpers.runQuery(this.state.searchQuery).then(function(data) {
+                if (data !== this.state.results) {
+                    console.log(data);
+                    this.setState({results: data});
+                }
+                // This code is necessary to bind the keyword "this" when we say this.setState
+                // to actually mean the component itself and not the runQuery function.
+            }.bind(this));
+        }
     }
-    handleSubmit(event) {
-        event.preventDefault();
-        this.props.articleSearch(this.state.topic, this.state.startYear, this.state.endYear);
-        this.setState(
-            {
-                topic: '',
-                startYear: '',
-                endYear: ''
-            }
-        );
+
+    postSavedArticle(article) {
+        //console.log('this is the saved Article', article)
+        helpers.postSavedArticle(article);
+
     }
-    render(){
+
+    // This function will respond to the user input
+    handleChange(e) {
+        var newState = {};
+        newState[e.target.id] = e.target.value;
+        this.setState(newState);
+    }
+
+    // When a user submits...
+    handleSubmit(e) {
+        // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
+        // clicking the button
+        e.preventDefault();
+        var newQuery = "&q=" + this.state.term + "&begin_date=" + this.state.begin + "&end_date=" + this.state.end;
+
+        this.setState({searchQuery: newQuery});
+    }
+
+    // Here we render the function
+    render() {
+
         return (
-            <div className="container" id="search-box">
+
+            <div>
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <h3 className="panel-title text-center">Search</h3>
+                    </div>
+                    <div className="panel-body text-center">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <h4 className="">
+                                    <strong>Topic</strong>
+                                </h4>
+                                <input type="text" onChange={this.handleChange} className="form-control text-left" id="term" required/>
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <h4 className="">
+                                            <strong>Start Date (YYYY)</strong>
+                                        </h4>
+                                        <input value={this.state.begin} onChange={this.handleChange} type="number" className="form-control text-center" id="begin" required/>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <h4 className="">
+                                            <strong>End Date (YYYY)</strong>
+                                        </h4>
+                                        <input value={this.state.end} onChange={this.handleChange} type="number" className="form-control text-center" id="end" required/>
+                                    </div>
+                                </div>
+
+                                <br/>
+                                <button className="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div className="row">
                     <div className="col-md-12">
-                            <div className="panel-body text-center">
-                                <form onSubmit={this.handleSubmit}>
-                                    <h4>Topic:</h4> <input className="form-control" value={this.state.topic} onChange={this.handleChange('topic')} placeholder="Enter topic to search" /><br />
-                                    <h4>Start Year:</h4> <input className="form-control" value={this.state.startYear} onChange={this.handleChange('startYear')} placeholder="YYYY" /><br />
-                                    <h4>End Year:</h4> <input className="form-control" value={this.state.endYear} onChange={this.handleChange('endYear')} placeholder="YYYY" /><br />
-                                    <button type="submit" className="btn btn-primary btn-lg" value="Submit">Search</button>
-                                </form>
-                            </div>
+                        <Results results={this.state.results} postSavedArticle={this.postSavedArticle}/>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
-  };
+};
 
 export default Search;

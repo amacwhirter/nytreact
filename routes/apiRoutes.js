@@ -4,9 +4,9 @@ var articleController = require("../controllers/articleController");
 
 var router = new express.Router();
 
-// Get all quotes (or optionally a specific quote with an id)
+// Get all articles (or optionally a specific quote with an id)
 router.get("/articles/:id?", articleController.index);
-// Create a new quote using data passed in req.body
+// Create a new article using data passed in req.body
 router.post("/articles", articleController.create);
 // Update an existing quote with a speicified id param, using data in req.body
 router.patch("/articles/:id", articleController.update);
