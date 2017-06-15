@@ -1,49 +1,49 @@
-// Include React
-import React from "react";
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import Search from '../Components/Children/Search';
+import Results from '../Components/Children/Results';
+import Saved from '../Components/Children/Saved';
 
-
-import Search from "./Children/Search";
-import Saved from "./Children/Saved";
-import Results from "./Children/Results";
-import helpers from "../utils/helpers";
-
-
-class Main extends React.Component {
-
-  render() {
-
-    return(
-
-  <div className="container">
-
-    <div className="panel panel-default">
-      <div className="panel-heading">
-        <h2 className="text-center">New York Times Article Search</h2>
-        <p className="text-center">
-          Search for articles below!
-        </p>
-      <p>
-        <a href="#/Search" className="btn btn-default">Search</a>
-        <a href="#/Saved" className="btn btn-default">Saved Articles</a>
-      </p>
-      </div>
-    </div>
-
-    <div className="row">
-      <div className="col-md-12">
-        <BrowserRouter>
-        <Switch>
-          <Route exact path="Search" component={Search} />
-          <Route exact path="Saved" component={Saved} />
-        </Switch>
-      </BrowserRouter>
-      </div>
-    </div>
-  </div>
-);
+class Main extends Component {
+	constructor() {
+		super();
+		this.state = {
+			topic: '',
+			startYear: '',
+			endYear: ''
+		}
+		this.setParent=this.setParent.bind(this);
+	}
+	setParent(topic, startYear, endYear) {
+		this.setState({
+			topic: topic,
+			startYear: startYear,
+			endYear: endYear
+		});
+	}
+	render() {
+		return (
+			<div className="container">
+				<div className="row">
+					<div className="jumbotron">
+						<h1>New York Times Article Scrubber</h1>
+						<p><em>Search for articles and annotate articles of interest!</em></p>
+						<a href="#/search"><button className="btn btn-default">Search</button></a>
+						<a href="#/saved"><button className="btn btn-default">Saved Articles</button></a>
+						<a href="#/results"><button className="btn btn-default">Results</button></a>
+					</div>
+			<div className="container-fluid">
+				<Search setParent={this.setParent}/>
+				<Results
+					topic={this.state.topic}
+					startYear={this.state.startYear}
+					endYear={this.state.endYear}
+				/>
+				<Saved />
+			</div>
+		</div>
+	</div>
+		);
+	}
 }
-};
 
-// Export the component back for use in other files
 export default Main;

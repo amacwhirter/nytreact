@@ -1,61 +1,29 @@
-// Include the axios package for performing HTTP requests (promise based alternative to request)
-var axios = require('axios');
+import axios from 'axios';
 
-// nyt API
-var nytAPI = "568297530230411eade03711b5fe7fcc";
-
-// Helper Functions (in this case the only one is runQuery)
-var helpers = {
-
-	// This function serves our purpose of running the query to geolocate.
-	runQuery: function(term, startDate, endDate){
-
-		console.log(term, startDate, endDate);
-
-		//Figure out the geolocation
-		var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytAPI + "&q=" + term + "&begin_date=" + startDate + "&end_date=" + endDate + "&page=1";
-
-		return axios.get(queryURL)
-			.then(function(response){
-
-				console.log(response.data.response.docs);
-				return response.data.response.docs;
-		});
-
+const API = {
+	getArticles: (topic, startYear, endYear) => {
+		var authKey = "568297530230411eade03711b5fe7fcc";
+		var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=";
+		var queryURL = queryURLBase + topic;
+		if (parseInt(startYear)) {
+			queryURL = queryURL + "&begin_date=" + startYear + "0101";
+		}
+		if (parseInt(endYear)) {
+			queryURL = queryURL + "&end_date=" + endYear + "0101";
+		}
+		return axios.get(queryURL);
 	},
-
-	// This function hits our own server to retrieve the record of query results
-	getArticle: function(){
-
-		return axios.get('/api')
-			.then(function(response){
-
-				console.log(response);
-				return response;
-			});
+	saveArticle: (title, url) => {
+		return axios.post('/api/saved', {title: title, url: url});
 	},
-
-	// This function posts new searches to our database.
-	postArticle: function(url, main){
-
-		return axios.post('/api', {url: url, main: main})
-			.then(function(results){
-
-				console.log("Posted to MongoDB");
-				return(results);
-			});
+	deleteArticle: (id) => {
+		return axios.delete(`/api/saved/${id}`);
 	},
-	removeArticle: function(_id){
-
-		return axios.put('/api', {_id: _id})
-			.then(function(results){
-
-				console.log("Posted to MongoDB");
-				return(results);
-			});
-	}
-
+	// favoriteArticle: (article) => {
+	// 	article.favorited = !article.favorited;
+	// 	const { _id, favorited } = article;
+	// 	return axios.patch(`/api/saved/${_id}`, { favorited });
+	// }
 };
 
-// We export the helpers function
-module.exports = helpers;
+export default API;

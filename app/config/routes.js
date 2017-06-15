@@ -1,6 +1,6 @@
 // Include the React library
 import React from "react";
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Route, IndexRoute, Router, browserHistory } from "react-router";
 
 // Reference the high-level components
 import Main from "../Components/Main";
@@ -12,11 +12,14 @@ import Results from "../Components/Children/Results";
 const routes = (
 
     // The high level component is the Router component
-    <HashRouter>
-
-        <Route path="/" component={Main} />
-
-    </HashRouter>
+    <Router history={browserHistory}>
+      <Route path="/" component={Main}>
+        <Route path="Search" component={Search} />
+        <Route path="Results" component={Results} />
+        <Route path="Saved" component={Saved} />
+        <IndexRoute component={Search} />
+      </Route>
+    </Router>
 );
 
 export default routes;
