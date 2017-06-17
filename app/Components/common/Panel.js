@@ -17,7 +17,8 @@ class Panel extends Component {
 	  			<div className="panel-body">
 	    			<h4 id="resultListing">
 	    				<a href={this.props.article.web_url} target="_blank">{this.props.article.headline.main}</a>
-		    			<button
+							<br />
+							<button
 		    				id="saveButton"
 		    				className="btn btn-primary"
 		    				onClick={this.saveArticle}

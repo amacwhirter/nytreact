@@ -20,6 +20,9 @@ class Main extends Component {
 			endYear: endYear
 		});
 	}
+	getSaved() {
+	this.child.getSaved();
+}
 	render() {
 		return (
 			<div className="container">
@@ -37,8 +40,11 @@ class Main extends Component {
 					topic={this.state.topic}
 					startYear={this.state.startYear}
 					endYear={this.state.endYear}
+					getSaved={this.getSaved}
 				/>
-				<Saved />
+				<Saved
+					ref={instance => { this.child = instance; }}
+				/>
 			</div>
 		</div>
 	</div>

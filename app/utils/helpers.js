@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = {
+const Helpers = {
 	getArticles: (topic, startYear, endYear) => {
 		var authKey = "568297530230411eade03711b5fe7fcc";
 		var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=";
@@ -16,14 +16,12 @@ const API = {
 	saveArticle: (title, url) => {
 		return axios.post('/api/saved', {title: title, url: url});
 	},
+	getSaved: () => {
+	return axios.get('/api/saved');
+	},
 	deleteArticle: (id) => {
 		return axios.delete(`/api/saved/${id}`);
 	},
-	// favoriteArticle: (article) => {
-	// 	article.favorited = !article.favorited;
-	// 	const { _id, favorited } = article;
-	// 	return axios.patch(`/api/saved/${_id}`, { favorited });
-	// }
 };
 
-export default API;
+export default Helpers;

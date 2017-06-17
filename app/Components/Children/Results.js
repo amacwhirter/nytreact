@@ -9,24 +9,25 @@ class Results extends Component {
 			articles: []
 		}
 		// this.getArticles = this.getArticles.bind(this);
+		this.getSaved = this.getSaved.bind(this);
 		this.renderArticles = this.renderArticles.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		// console.log('TAG');
 		// this.getArticles();
 		Helpers.getArticles(nextProps.topic, nextProps.startYear, nextProps.endYear).then((res) => {
 			// console.log(res.data.response.docs);
 			this.setState({articles: res.data.response.docs});
 		});
 	}
-	// getArticles() {
-
-	// }
+	getSaved() {
+		this.props.getSaved();
+	}
 	renderArticles() {
 		return this.state.articles.map(article => (
 			<Panel
 				article={article}
 				key={article._id}
+				getSaved={this.getSaved}
 			/>
 		));
 	}
