@@ -19,16 +19,16 @@ class Saved extends Component {
 			this.setState({ saved: res.data });
 		});
 	}
-	renderSaved() {
-		return this.state.saved.map(saved => (
-			<Panel2
-				saved={saved}
-				id={saved._id}
-				key={saved._id}
-				getSaved={this.getSaved}
-			/>
-		));
-	}
+  // A helper method for rendering one panel for each quote
+  renderSaved() {
+    return this.state.saved.map(saved => (
+      <Panel2
+        saved={saved}
+        key={saved._id}
+        getSaved={this.getSaved}
+      />
+    ));
+  }
 	render() {
 		return (
 			<div className="container-fluid">

@@ -8,14 +8,11 @@ class Results extends Component {
 		this.state = {
 			articles: []
 		}
-		// this.getArticles = this.getArticles.bind(this);
 		this.getSaved = this.getSaved.bind(this);
 		this.renderArticles = this.renderArticles.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		// this.getArticles();
 		Helpers.getArticles(nextProps.topic, nextProps.startYear, nextProps.endYear).then((res) => {
-			// console.log(res.data.response.docs);
 			this.setState({articles: res.data.response.docs});
 		});
 	}
