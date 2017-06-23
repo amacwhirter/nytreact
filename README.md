@@ -69,6 +69,9 @@ Happy Contributing!
 * Morgan
 * MongoDB
 * Mongoose
+* ES6
+* Babel
+* Webpack
 * Node.JS
 * Express
 * Handlebars
